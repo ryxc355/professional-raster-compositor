@@ -1,5 +1,5 @@
 [package]
-name = "photocraft-cli"
+name = "prc-cli"
 description = "Headless PhotoCraft: convert, inspect, run commands, batch, MCP server"
 version.workspace = true
 edition.workspace = true
@@ -19,7 +19,7 @@ name = "photocraft_cli"
 path = "src/lib.rs"
 
 [[bin]]
-name = "photocraft-cli"
+name = "prc-cli"
 path = "src/main.rs"
 
 [dependencies]

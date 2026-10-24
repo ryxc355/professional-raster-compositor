@@ -14,7 +14,7 @@
 //! ```
 //!
 //! The list is in application order (first = bottom, applied first), like
-//! [`SmartObject::smart_filters`](photocraft_doc::SmartObject). Filters PhotoCraft implements map
+//! [`SmartObject::smart_filters`](photocraft_doc::SmartObject). Filters Professional Raster Compositor implements map
 //! to their command id and dialog parameters; any other filter becomes a
 //! [`UNSUPPORTED_FILTER`] entry that keeps its descriptor verbatim (hex in `params.psd`), so it is
 //! listed, can be hidden, reordered or deleted, and is written back unchanged.
@@ -48,7 +48,7 @@ mod perspective_warp;
 
 pub use displace::{embed_map as displace_embed_map, embedded_map as displace_embedded_map, without_map as displace_without_map};
 
-/// Command id of a Photoshop smart filter PhotoCraft does not implement. Its params hold the
+/// Command id of a Photoshop smart filter Professional Raster Compositor does not implement. Its params hold the
 /// filter's name, Photoshop filter id and descriptor (`psd`, hex); it renders as a pass-through.
 pub const UNSUPPORTED_FILTER: &str = "psd.unsupportedFilter";
 
@@ -137,7 +137,7 @@ pub fn filter_stack(fx: &Descriptor) -> FilterStack {
 
 // ---------- the filters we model ----------
 
-/// Photoshop filter → PhotoCraft command, keyed by the `Fltr` class (and `filterID`).
+/// Photoshop filter → Professional Raster Compositor command, keyed by the `Fltr` class (and `filterID`).
 struct Known {
     class: &'static str,
     filter_id: i32,
@@ -236,7 +236,7 @@ const NO_OPTIONS: [&str; 11] = ["Blr ", "BlrM", "Avrg", "Dspc", "FndE", "Fct ", 
 // Dust & Scratches (filterID DstS): DstS { Rds  long, Thsh long }
 // ```
 //
-// PhotoCraft's Smart Sharpen removes a Gaussian blur, non-legacy: Lens Blur, Motion Blur, legacy
+// Professional Raster Compositor's Smart Sharpen removes a Gaussian blur, non-legacy: Lens Blur, Motion Blur, legacy
 // mode, Shadow/Highlight settings or any other key keep the whole entry verbatim. `presetKind`
 // only names the dialog's preset: it is accepted on open but not kept (the engine takes no such
 // parameter) and not written (Photoshop leaves it out of entries with explicit values).
@@ -252,7 +252,7 @@ fn unit_in(d: &Descriptor, key: &str, u: &[u8; 4], lo: f64, hi: f64) -> Option<f
     }
 }
 
-/// `filter.sharpen.smartSharpen` params; `None` for a setting PhotoCraft doesn't render.
+/// `filter.sharpen.smartSharpen` params; `None` for a setting Professional Raster Compositor doesn't render.
 fn smart_sharpen_params(f: &Descriptor) -> Option<J> {
     if f.items.iter().any(|(k, _)| !SMART_SHARPEN_KEYS.iter().any(|x| k.is(x))) {
         return None;
@@ -274,7 +274,7 @@ fn smart_sharpen_params(f: &Descriptor) -> Option<J> {
     Some(J::Object(out))
 }
 
-/// Photoshop enum codes ↔ PhotoCraft parameter values, per filter setting.
+/// Photoshop enum codes ↔ Professional Raster Compositor parameter values, per filter setting.
 const RIPPLE_SIZE: [(&[u8; 4], &str); 3] = [(b"Sml ", "small"), (b"Mdm ", "medium"), (b"Lrg ", "large")];
 const SPHERIZE_MODE: [(&[u8; 4], &str); 3] = [(b"Nrml", "normal"), (b"HrzO", "horizontalOnly"), (b"VrtO", "verticalOnly")];
 const POLAR_MODE: [(&[u8; 4], &str); 2] = [(b"RctP", "rectangularToPolar"), (b"PlrR", "polarToRectangular")];
@@ -282,7 +282,7 @@ const ZIGZAG_STYLE: [(&[u8; 4], &str); 3] = [(b"PndR", "pondRipples"), (b"OtFr",
 const WAVE_TYPE: [(&[u8; 4], &str); 3] = [(b"WvSn", "sine"), (b"WvTr", "triangle"), (b"WvSq", "square")];
 const UNDEFINED_AREAS: [(&[u8; 4], &str); 2] = [(b"WrpA", "wrap"), (b"RptE", "repeat")];
 
-/// The PSD filter record that PhotoCraft's `command` is written as, if it has one.
+/// The PSD filter record that Professional Raster Compositor's `command` is written as, if it has one.
 fn known_by_command(command: &str) -> Option<&'static Known> {
     KNOWN.iter().find(|k| k.command == command)
 }
@@ -593,7 +593,7 @@ fn known_params(class: &str, f: Option<&Descriptor>, item: &Descriptor) -> Optio
             json!({"amount": int(f, "Amnt")?, "ridges": int(f, "NmbR")?, "style": enum_name(f, "ZZTy", "ZZTy", &ZIGZAG_STYLE)?})
         }
         ("Wave", Some(f)) if exact_keys(f, &WAVE_KEYS) => {
-            // PhotoCraft's Wave has no Scale: a scaled wave stays verbatim rather than lose it. The
+            // Professional Raster Compositor's Wave has no Scale: a scaled wave stays verbatim rather than lose it. The
             // same for more generators than the renderer models, which would draw fewer than
             // Photoshop did (and than the file asks for, once its cached pixels are re-rendered).
             let generators = int(f, "NmbG")?;
@@ -1193,7 +1193,7 @@ fn fltr_for(k: &Known, p: &J) -> Result<Option<Descriptor>, String> {
                 Some(s) => Value::Integer(s as i32),
                 None => pi(p, "seed", 0.0),
             };
-            // The renderer draws at most MAX_WAVE_GENERATORS: write what PhotoCraft rendered, so
+            // The renderer draws at most MAX_WAVE_GENERATORS: write what Professional Raster Compositor rendered, so
             // Photoshop doesn't draw more generators than the user saw.
             let generators = pf(p, "generators", 5.0).round().clamp(1.0, f64::from(photocraft_algo::MAX_WAVE_GENERATORS)) as i32;
             d.with("Wvtp", enum_param(p, "type", "sine", "Wvtp", &WAVE_TYPE)?)
@@ -1963,7 +1963,7 @@ mod tests {
         Descriptor::new("DstS").with("Rds ", Value::Integer(radius)).with("Thsh", Value::Integer(threshold))
     }
 
-    /// The `Fltr` descriptor PhotoCraft writes for `f`, after a byte round trip.
+    /// The `Fltr` descriptor Professional Raster Compositor writes for `f`, after a byte round trip.
     fn written_fltr(f: &SmartFilter) -> Descriptor {
         let d = Descriptor::from_bytes(&item_for_filter(f).unwrap().to_bytes()).unwrap();
         get_desc(&d, "Fltr").unwrap().clone()
@@ -2002,12 +2002,12 @@ mod tests {
             assert_eq!(written_fltr(&f), smart_sharpen(200.0, 1.0, 10.0, "GsnB"));
         }
 
-        // Without options PhotoCraft writes the engine's defaults, Gaussian Blur.
+        // Without options Professional Raster Compositor writes the engine's defaults, Gaussian Blur.
         assert_eq!(written_fltr(&sf("filter.sharpen.smartSharpen", json!({}))), smart_sharpen(100.0, 1.0, 10.0, "GsnB"));
     }
 
     /// Lens Blur (Photoshop's default), Motion Blur and legacy mode render differently from
-    /// PhotoCraft's Smart Sharpen, so those entries stay verbatim.
+    /// Professional Raster Compositor's Smart Sharpen, so those entries stay verbatim.
     #[test]
     fn smart_sharpen_settings_we_dont_render_stay_verbatim() {
         let mut default_entry = Descriptor::new("smartSharpen").with("presetKind", enumv("presetKindType", "presetKindDefault"));
@@ -2210,7 +2210,7 @@ mod tests {
     }
 
     /// The `Fltr` descriptors Photoshop 27 wrote for these filters (one smart object each, saved as
-    /// PSD and read back), with the settings PhotoCraft reads from them.
+    /// PSD and read back), with the settings Professional Raster Compositor reads from them.
     const PHOTOSHOP_FLTR: [(&str, &str, &str); 6] = [
         ("filter.distort.pinch", r#"{"amount":-28}"#, "0000000600500069006e00630068000000000000506e63680000000100000000416d6e746c6f6e67ffffffe4"),
         ("filter.distort.twirl", r#"{"angle":-355}"#, "000000060054007700690072006c0000000000005477726c0000000100000000416e676c6c6f6e67fffffe9d"),
@@ -2236,7 +2236,7 @@ mod tests {
         ),
     ];
 
-    /// Photoshop's Wave with Scale 100% / 28%: PhotoCraft's Wave has no Scale.
+    /// Photoshop's Wave with Scale 100% / 28%: Professional Raster Compositor's Wave has no Scale.
     const PHOTOSHOP_WAVE: &str = "000000050057006100760065000000000000576176650000000a0000000057767470656e756d00000000577674700000000057765472000000004e6d62476c6f6e670000014c00000000574c4d6e6c6f6e67000000d500000000574c4d786c6f6e67000000d600000000416d4d6e6c6f6e67000000f000000000416d4d786c6f6e67000000f10000000053636c486c6f6e67000000640000000053636c566c6f6e670000001c00000000556e6441656e756d00000000556e6441000000005772704100000000526e64536c6f6e670013624a";
 
     /// A `filterFX` list item as Photoshop writes it (enabled, Normal at 100%, with options), wrapping the `Fltr` descriptor `fltr`.
@@ -2641,7 +2641,7 @@ mod tests {
             assert_eq!((f.command.as_str(), &f.params), ("filter.pixelate.mezzotint", &json!({"type": ty})));
         }
         // No type or an unknown type is Fine Dots, like the engine; the seed
-        // (PhotoCraft only) is not saved.
+        // (Professional Raster Compositor only) is not saved.
         for p in [json!({}), json!({"type": "sparkles"}), json!({"type": "fineDots", "seed": 77})] {
             let d = item_for_filter(&sf("filter.pixelate.mezzotint", p)).unwrap();
             let fltr = get_desc(&d, "Fltr").unwrap();
@@ -2730,8 +2730,8 @@ mod tests {
         assert_eq!(filter_from_item(&bare).command, UNSUPPORTED_FILTER);
     }
 
-    /// Distort smart filters from a Photoshop file open as their PhotoCraft filters, and the ones
-    /// PhotoCraft writes carry the same settings, keys and order as Photoshop's.
+    /// Distort smart filters from a Photoshop file open as their Professional Raster Compositor filters, and the ones
+    /// Professional Raster Compositor writes carry the same settings, keys and order as Photoshop's.
     #[test]
     fn photoshop_distort_filters_read_and_write_like_photoshop() {
         for (command, params, hex) in PHOTOSHOP_FLTR {
@@ -2762,7 +2762,7 @@ mod tests {
         assert_eq!(f.command, UNSUPPORTED_FILTER);
         assert_eq!(item_for_filter(&f).unwrap().get("Fltr"), item.get("Fltr"));
 
-        // An extra or repeated setting PhotoCraft doesn't model keeps the filter Photoshop's, unchanged.
+        // An extra or repeated setting Professional Raster Compositor doesn't model keeps the filter Photoshop's, unchanged.
         let mut fltrs: Vec<Descriptor> = PHOTOSHOP_FLTR.iter().map(|(_, _, hex)| Descriptor::from_bytes(&from_hex(hex).unwrap()).unwrap()).collect();
         let mut wave = unscaled_wave();
         set(&mut wave, "NmbG", Value::Integer(5));
@@ -2788,7 +2788,7 @@ mod tests {
         wave
     }
 
-    /// An unscaled Wave opens as PhotoCraft's Wave (Triangle, the other settings as stored) up to
+    /// An unscaled Wave opens as Professional Raster Compositor's Wave (Triangle, the other settings as stored) up to
     /// the generators the renderer models; one more and it stays Photoshop's, unchanged.
     #[test]
     fn wave_maps_up_to_the_generators_the_renderer_models() {
@@ -2821,7 +2821,7 @@ mod tests {
         }
     }
 
-    /// PhotoCraft draws at most `MAX_WAVE_GENERATORS` generators, so a Wave edited past that exports
+    /// Professional Raster Compositor draws at most `MAX_WAVE_GENERATORS` generators, so a Wave edited past that exports
     /// the 64 it rendered, and a count below 1 exports 1, instead of Photoshop drawing more.
     #[test]
     fn wave_export_writes_only_the_generators_the_renderer_draws() {
@@ -2883,7 +2883,7 @@ mod tests {
         assert_eq!(back.get("Nm  "), Some(&Value::Text(UnicodeString::new_nul("Invert"))));
     }
 
-    /// A filter PhotoCraft doesn't model, or a known one with settings it doesn't, is kept verbatim; only its visibility and blend change.
+    /// A filter Professional Raster Compositor doesn't model, or a known one with settings it doesn't, is kept verbatim; only its visibility and blend change.
     #[test]
     fn photoshop_sharpen_without_fltr_imports_as_sharpen() {
         // #6267: Photoshop's Sharpen item holds only its name, blending and `filterID`.

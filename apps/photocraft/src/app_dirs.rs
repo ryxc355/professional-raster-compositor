@@ -4,11 +4,11 @@
 //! In order:
 //! 1. `PHOTOCRAFT_CONFIG_DIR`, when set (tests, agents, custom setups).
 //! 2. **Portable mode** (#228): a marker file ([`PORTABLE_MARKERS`]) beside the executable puts
-//!    everything in `<exe dir>/PhotoCraftData`, so a portable copy on a USB stick leaves nothing in
+//!    everything in `<exe dir>/PRCData`, so a portable copy on a USB stick leaves nothing in
 //!    `%APPDATA%`. The Windows portable zip ships with `portable.txt`; the MSI doesn't. If that
 //!    folder can't be written (read-only medium, Program Files), the app warns and falls back.
-//! 3. The platform convention: macOS `~/Library/Application Support/Photocraft`, Windows
-//!    `%APPDATA%\Photocraft`, Linux `$XDG_CONFIG_HOME/photocraft` or `~/.config/photocraft`.
+//! 3. The platform convention: macOS `~/Library/Application Support/PRC`, Windows
+//!    `%APPDATA%\PRC`, Linux `$XDG_CONFIG_HOME/photocraft` or `~/.config/photocraft`.
 //!
 //! One exception: the platform convention keeps crash-recovery autosaves out of what is synced
 //! with the settings: the Windows roaming profile and the Linux config folder ([`recovery_dir`]).
@@ -18,16 +18,16 @@ use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
 /// Files beside the executable that switch on portable mode (either one; contents are ignored).
-pub const PORTABLE_MARKERS: [&str; 2] = ["portable.txt", "PhotoCraft.portable"];
+pub const PORTABLE_MARKERS: [&str; 2] = ["portable.txt", "PRC.portable"];
 /// The data folder created beside the executable in portable mode.
-pub const PORTABLE_DATA_DIR: &str = "PhotoCraftData";
+pub const PORTABLE_DATA_DIR: &str = "PRCData";
 
 /// How [`DataDir::dir`] was chosen.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Mode {
     /// `PHOTOCRAFT_CONFIG_DIR`.
     Override,
-    /// `<exe dir>/PhotoCraftData`.
+    /// `<exe dir>/PRCData`.
     Portable,
     /// The platform's per-user config directory.
     Platform,
@@ -79,13 +79,13 @@ pub fn recovery_dir() -> Option<PathBuf> {
 
 /// The recovery folder for `data`. Autosaves hold whole documents and are rewritten every few
 /// minutes, so with the platform convention they stay out of what is synced with the settings:
-/// - Windows (#5648): the machine-local `%LOCALAPPDATA%\Photocraft\Recovery`; the roaming
+/// - Windows (#5648): the machine-local `%LOCALAPPDATA%\PRC\Recovery`; the roaming
 ///   `%APPDATA%` may be synced at sign-in and sign-out or capped by policy.
 /// - Linux and other XDG systems (#6612): `$XDG_STATE_HOME/photocraft/Recovery`, by default
 ///   `~/.local/state/photocraft/Recovery`, where the XDG Base Directory spec puts state that
 ///   should outlive a restart but isn't configuration; dotfile managers and config sync often copy
 ///   `~/.config` whole. As the spec asks, a relative `XDG_STATE_HOME` is ignored.
-/// - macOS: `~/Library/Application Support/Photocraft/Recovery` as before. Apple's guidelines put
+/// - macOS: `~/Library/Application Support/PRC/Recovery` as before. Apple's guidelines put
 ///   app-created data that can't be regenerated there; `~/Library/Caches` may be purged by the
 ///   system.
 ///
@@ -95,7 +95,7 @@ pub fn resolve_recovery(data: &DataDir, env: impl Fn(&str) -> Option<OsString>) 
     if data.mode == Mode::Platform {
         if cfg!(windows) {
             if let Some(local) = env("LOCALAPPDATA").filter(|l| !l.is_empty()) {
-                return Some(PathBuf::from(local).join("Photocraft").join(RECOVERY));
+                return Some(PathBuf::from(local).join("PRC").join(RECOVERY));
             }
         } else if !cfg!(target_os = "macos") {
             let state = env("XDG_STATE_HOME")
@@ -110,7 +110,7 @@ pub fn resolve_recovery(data: &DataDir, env: impl Fn(&str) -> Option<OsString>) 
     data.dir.as_ref().map(|d| d.join(RECOVERY))
 }
 
-/// The lock file, beside the recovery folder, that keeps two PhotoCraft processes starting at
+/// The lock file, beside the recovery folder, that keeps two PRC processes starting at
 /// once (`--new-instance`, control launches) from moving the same autosaves.
 const MIGRATION_LOCK: &str = "recovery-migration.lock";
 
@@ -160,7 +160,7 @@ fn adopt_legacy_recovery_waiting(legacy: &Path, dir: &Path, wait: std::time::Dur
             Err(std::fs::TryLockError::WouldBlock) if std::time::Instant::now() < deadline => std::thread::sleep(std::time::Duration::from_millis(50)),
             Err(std::fs::TryLockError::WouldBlock) => {
                 // Another process is moving and may yet remove the old folder: never write there.
-                log::info!("another PhotoCraft is moving crash-recovery autosaves; using {}", dir.display());
+                log::info!("another PRC is moving crash-recovery autosaves; using {}", dir.display());
                 return dir.to_path_buf();
             }
             Err(std::fs::TryLockError::Error(e)) => {
@@ -321,7 +321,7 @@ fn move_path(from: &Path, to: &Path) -> std::io::Result<()> {
 
 /// Move `from` to `to` by copying. `from` is first renamed aside on its own volume
 /// (`.<name>.<pid>-<n>.held`, [`hold`]), so a process still writing to the old path (another
-/// launch that couldn't take the lock, an older PhotoCraft) starts a new `from` there instead of
+/// launch that couldn't take the lock, an older PRC) starts a new `from` there instead of
 /// adding to what is copied, and nothing it writes is removed. The held original is copied to a
 /// staged path ([`stage_copy`]), published without replacing anything ([`publish`]), and only
 /// then removed. If the copy or publish fails, the held original is put back ([`put_back`]).
@@ -478,10 +478,10 @@ pub fn resolve(env: impl Fn(&str) -> Option<OsString>, exe_dir: Option<&Path>) -
 pub fn platform_dir(env: &impl Fn(&str) -> Option<OsString>) -> Option<PathBuf> {
     let home = env("HOME").filter(|h| !h.is_empty()).map(PathBuf::from);
     if cfg!(target_os = "macos") {
-        return home.map(|h| h.join("Library/Application Support/Photocraft"));
+        return home.map(|h| h.join("Library/Application Support/PRC"));
     }
     if cfg!(windows) {
-        return env("APPDATA").filter(|a| !a.is_empty()).map(|a| PathBuf::from(a).join("Photocraft"));
+        return env("APPDATA").filter(|a| !a.is_empty()).map(|a| PathBuf::from(a).join("PRC"));
     }
     env("XDG_CONFIG_HOME").filter(|x| !x.is_empty()).map(PathBuf::from).or_else(|| home.map(|h| h.join(".config"))).map(|c| c.join("photocraft"))
 }
@@ -542,9 +542,9 @@ mod tests {
         assert!(!exe.join(PORTABLE_DATA_DIR).exists(), "no portable folder without a marker");
         // The convention per platform.
         if cfg!(target_os = "macos") {
-            assert_eq!(dir, root.join("home/Library/Application Support/Photocraft"));
+            assert_eq!(dir, root.join("home/Library/Application Support/PRC"));
         } else if cfg!(windows) {
-            assert_eq!(dir, root.join("appdata").join("Photocraft"));
+            assert_eq!(dir, root.join("appdata").join("PRC"));
         } else {
             assert_eq!(dir, root.join("home/.config/photocraft"));
         }
@@ -555,7 +555,7 @@ mod tests {
     fn either_marker_keeps_everything_beside_the_exe() {
         for marker in PORTABLE_MARKERS {
             let root = temp("portable");
-            let exe = root.join("PhotoCraft");
+            let exe = root.join("PRC");
             std::fs::create_dir_all(&exe).unwrap();
             std::fs::write(exe.join(marker), b"").unwrap();
             let d = resolve(fake_home(&root), Some(&exe));
@@ -621,11 +621,11 @@ mod tests {
     #[test]
     fn autosaves_stay_out_of_the_roaming_profile() {
         let root = temp("recovery-local");
-        let settings = root.join("appdata").join("Photocraft");
+        let settings = root.join("appdata").join("PRC");
         let local = root.join("local");
         let env = env_of(&[("LOCALAPPDATA", &local)]);
         let platform = DataDir { dir: Some(settings.clone()), mode: Mode::Platform, warning: None };
-        let expected = if cfg!(windows) { local.join("Photocraft").join("Recovery") } else { settings.join("Recovery") };
+        let expected = if cfg!(windows) { local.join("PRC").join("Recovery") } else { settings.join("Recovery") };
         assert_eq!(resolve_recovery(&platform, &env), Some(expected));
         for mode in [Mode::Override, Mode::Portable] {
             let d = DataDir { dir: Some(settings.clone()), mode, warning: None };
@@ -679,7 +679,7 @@ mod tests {
     fn autosaves_from_the_old_folder_move_to_the_new_one() {
         let root = temp("recovery-move");
         let legacy = root.join("roaming").join("Recovery");
-        let dir = root.join("local").join("Photocraft").join("Recovery");
+        let dir = root.join("local").join("PRC").join("Recovery");
         autosave(&legacy, "a");
         assert_eq!(adopt_legacy_recovery(&legacy, &dir), dir);
         assert!(!legacy.exists(), "the old folder is gone");
@@ -858,7 +858,7 @@ mod tests {
         let _ = std::fs::remove_dir_all(&root);
     }
 
-    /// A writer that still uses the old path while it is being copied (an older PhotoCraft)
+    /// A writer that still uses the old path while it is being copied (an older PRC)
     /// starts a new folder there; the move removes only the original it held aside.
     #[test]
     fn a_write_to_the_old_path_during_a_copy_is_not_removed() {

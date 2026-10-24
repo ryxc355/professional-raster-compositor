@@ -69,7 +69,7 @@ fn b64(bytes: &[u8]) -> String {
 }
 
 /// A set with a mapped filter, an adjustment layer, selection steps, a layer by name, a Stop,
-/// a Play, a tool selection (no document effect) and an event PhotoCraft has no command for.
+/// a Play, a tool selection (no document effect) and an event Professional Raster Compositor has no command for.
 fn sample() -> AtnFile {
     let levels = desc("Lvls").with(
         "Adjs",
@@ -1057,7 +1057,7 @@ fn retouching_set_events_map_to_their_commands() {
     // event stay unsupported rather than play with other values.
     let unsupported: Vec<(&str, usize)> = imp.unsupported.iter().map(|u| (u.event.as_str(), u.step)).collect();
     assert_eq!(unsupported, [("colorRange", 4), ("colorRange", 5), ("set", 8), ("someFutureEvent", 12)]);
-    // A legacy PhotoCraft export's `Yllw` yellows still read.
+    // A legacy Professional Raster Compositor export's `Yllw` yellows still read.
     let legacy = desc("null").with("ClrC", D::List(vec![D::Descriptor(desc("ClrC").with("Clrs", enm("Clrs", "Yllw")).with("Cyn ", pct(5.0)))]));
     assert_eq!(selective_from(&legacy), Some(json!({"yellows": [5.0, 0.0, 0.0, 0.0]})));
     // The mask of a named layer is not the target layer's mask: it stays unsupported.
@@ -1758,7 +1758,7 @@ fn events_photoshop_only_runs_by_name_export_by_name_and_old_codes_still_import(
         }
     }
 
-    // A whole set of Photoshop-shaped steps (names, FltI) and old PhotoCraft-shaped ones
+    // A whole set of Photoshop-shaped steps (names, FltI) and old Professional Raster Compositor-shaped ones
     // (legacy codes) loads to the same commands.
     let blur = |event: &str| item(event, "Box Blur", Some(desc("null").with("Rds ", px(3.0))));
     let surface = |event: &str| item(event, "Surface Blur", Some(desc("null").with("Rds ", px(5.0)).with("Thsh", long(15.0))));
@@ -1817,7 +1817,7 @@ fn photo_filter_saves_under_the_name_photoshop_runs() {
         assert!(d.get(key).is_some(), "the descriptor keeps {key}: {d:?}");
     }
 
-    // A Photoshop-authored step (by name) and an old PhotoCraft one (`PhtF`) both load to the
+    // A Photoshop-authored step (by name) and an old Professional Raster Compositor one (`PhtF`) both load to the
     // command, and saving them again writes the name.
     let data =
         set_of("S", vec![("Photoshop", vec![item("photoFilter", "Photo Filter", Some(d.clone()))]), ("Legacy", vec![item("PhtF", "Photo Filter", Some(d))])]);
@@ -1862,7 +1862,7 @@ fn photo_filter_saves_under_the_name_photoshop_runs() {
 
 /// A Black & White adjustment layer saves with Photoshop's `BanW` class (#8481): measured in
 /// Photoshop, a Make whose type is `BlnW` is refused. Photoshop's own `BanW` Make loads, and so
-/// does the `BlnW` one PhotoCraft wrote before.
+/// does the `BlnW` one Professional Raster Compositor wrote before.
 #[test]
 fn black_white_adjustment_layer_saves_as_photoshops_class_and_old_class_still_imports() {
     let id = "layer.newAdjustmentLayer.blackWhite";
@@ -1881,7 +1881,7 @@ fn black_white_adjustment_layer_saves_as_photoshops_class_and_old_class_still_im
     assert_eq!(r["unsupported"], json!([]), "{r}");
     assert_eq!(t.actions.list[0].steps, vec![(id.to_string(), params)]);
 
-    // Photoshop's minimal Make (no settings) and an old PhotoCraft Make with a setting both load,
+    // Photoshop's minimal Make (no settings) and an old Professional Raster Compositor Make with a setting both load,
     // the setting kept; near misses stay Photoshop steps.
     let make = |class: &str| {
         let kind = if class == "BlnW" { desc(class).with("Rd  ", long(17.0)) } else { desc(class) };
@@ -1919,7 +1919,7 @@ fn smart_blur_quality_uses_photoshop_codes() {
     }
 
     // Photoshop-shaped steps (each quality and mode, as Photoshop stores them) and the codes
-    // PhotoCraft wrote before this fix read as the right quality.
+    // Professional Raster Compositor wrote before this fix read as the right quality.
     let cases = [
         ("SBQH", "SBMN", "high", "normal"),
         ("SBQM", "SBMO", "medium", "overlayEdge"),
@@ -2423,7 +2423,7 @@ fn emboss_saves_as_photoshops_event_and_loads_back() {
 }
 
 /// A filter recorded against a layer mask must not export as a plain filter that edits the
-/// layer's pixels on replay: Photoshop's descriptor has no field for PhotoCraft's `target`.
+/// layer's pixels on replay: Photoshop's descriptor has no field for Professional Raster Compositor's `target`.
 #[test]
 fn add_noise_with_mask_target_is_not_exported_as_pixel_filter() {
     let masked = Action {
@@ -2575,7 +2575,7 @@ fn apply_image_numeric_source_selectors_are_refused() {
     assert!(export("S", &[&a], &[], false).is_err());
 }
 
-/// A param a PhotoCraft step leaves out exports as PhotoCraft's default wherever Photoshop plays
+/// A param a Professional Raster Compositor step leaves out exports as Professional Raster Compositor's default wherever Photoshop plays
 /// the missing key differently (checked against Photoshop): Canvas Size anchors top left,
 /// Apply Image blends Normal, Color Balance turns preserve luminosity off, and a Paint Bucket
 /// step without a tolerance doesn't play at all.
@@ -2947,7 +2947,7 @@ fn image_size_resample_none_keeps_ignoring_its_size_through_atn_export() {
 
 /// #8302, #8308: Hue/Saturation's hue is `H   ` in Photoshop's `Hst2`, both ways. It was written
 /// and read as `Hue `: exported actions failed in Photoshop, and Photoshop-recorded ones lost
-/// their hue on import with no warning. PhotoCraft's own older files (`Hue `) still read.
+/// their hue on import with no warning. Professional Raster Compositor's own older files (`Hue `) still read.
 #[test]
 fn hue_saturation_uses_photoshops_hue_key() {
     let params = json!({"colorize": false, "hue": 30, "saturation": 20, "lightness": -7, "greens": {"hue": -12, "saturation": 0, "lightness": 0, "range": [75, 105, 135, 165]}});
@@ -2963,7 +2963,7 @@ fn hue_saturation_uses_photoshops_hue_key() {
     assert_eq!(get_num(&entries[1], "H   "), Some(-12.0), "a range's hue under H");
     assert!(entries.iter().all(|e| get_num(e, "Hue ").is_none()), "no Hue key");
 
-    // A Photoshop-recorded step (H) and an older PhotoCraft one (Hue ) both import with the hue.
+    // A Photoshop-recorded step (H) and an older Professional Raster Compositor one (Hue ) both import with the hue.
     let step = |key: &str| {
         desc("null")
             .with("presetKind", enm("presetKindType", "presetKindCustom"))
@@ -3077,7 +3077,7 @@ fn saves_round_trip_through_photoshop_events() {
     assert_eq!(get_obj(items[1].descriptor.as_ref().unwrap(), "As  ").map(|f| trimmed(&f.class_id)).as_deref(), Some("WebPFormat"));
     assert_eq!(import(&bytes).unwrap().actions[0].steps, steps);
 
-    // A Save As PhotoCraft can't express in Photoshop's terms is skipped, never exported as a
+    // A Save As Professional Raster Compositor can't express in Photoshop's terms is skipped, never exported as a
     // plain Save.
     let odd = Action::new("B", vec![("file.saveAs".to_string(), json!({"path": "/out/result.xcf"}))]);
     assert!(export("Saves", &[&odd], &[], false).is_err());

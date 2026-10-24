@@ -13,7 +13,6 @@
 # Clean-room: every entry was written from the plain meaning of the English label using ordinary
 # Polish image-editing vocabulary (warstwa, maska, zaznaczenie, pędzel, rozmycie, krycie ...). No
 # proprietary localisation resource, string table or product UI was consulted or copied; add
-# entries the same way. Product and technology names (PhotoCraft, ArtCraft, OpenType, CMYK, Lab ...)
 # stay in Latin letters; the trailing "…" of dialog commands is kept.
 # Conventions: menus are nouns (Plik, Edycja, Obraz ...), commands are infinitives (Otwórz…,
 # Zapisz jako…), sentence case as in the English source. Quotes: „…”.
@@ -794,11 +793,9 @@
 	Timeline	Oś czasu
 	Tool Presets	Ustawienia wstępne narzędzi
 	Tools	Narzędzia
-	About PhotoCraft	O programie PhotoCraft
-	PhotoCraft Website	Strona internetowa PhotoCraft
-	PhotoCraft on GitHub	PhotoCraft na GitHubie
-	ArtCraft Website	Strona internetowa ArtCraft
-	Join the ArtCraft Discord…	Dołącz do Discorda ArtCraft…
+	About Professional Raster Compositor	O programie Professional Raster Compositor
+	Professional Raster Compositor Website	Strona internetowa Professional Raster Compositor
+	Professional Raster Compositor on GitHub	Professional Raster Compositor na GitHubie
 	Report an Issue…	Zgłoś problem…
 	WIA Support…	Obsługa WIA…
 	Apply	Zastosuj
@@ -868,7 +865,7 @@
 	All Caps	Wszystkie wersaliki
 	All Slices	Wszystkie plasterki
 	All User Slices	Wszystkie plasterki użytkownika
-	All shortcuts reset to PhotoCraft defaults.	Wszystkie skróty przywrócono do ustawień domyślnych PhotoCraft.
+	All shortcuts reset to Professional Raster Compositor defaults.	Wszystkie skróty przywrócono do ustawień domyślnych Professional Raster Compositor.
 	Alt	Alt
 	Always use pressure for opacity	Zawsze używaj nacisku do krycia
 	Always use pressure for size	Zawsze używaj nacisku do rozmiaru
@@ -1101,7 +1098,6 @@
 	Diffusion	Dyfuzja
 	Discard the embedded profile (don't color manage)	Odrzuć osadzony profil (bez zarządzania kolorami)
 	Discontiguous	Niesąsiadujące
-	Discord	Discord
 	Dismiss	Zamknij
 	Display P3	Display P3
 	Display Text	Tekst wyświetlany
@@ -1120,7 +1116,7 @@
 	Draw with the Pen tool (P) or make a work path from a selection.	Rysuj narzędziem Pióro (P) lub utwórz ścieżkę roboczą z zaznaczenia.
 	Drop an image or PSD anywhere to open it.	Upuść obraz lub plik PSD w dowolnym miejscu, aby go otworzyć.
 	Native file drag-and-drop is unavailable	Natywne przeciąganie plików jest niedostępne
-	Native file drag-and-drop is not supported on Wayland yet. Use File › Open, or run PhotoCraft under XWayland with `WAYLAND_DISPLAY= photocraft`.	Natywne przeciąganie plików nie jest jeszcze obsługiwane w Waylandzie. Użyj Plik › Otwórz lub uruchom PhotoCraft w XWayland poleceniem `WAYLAND_DISPLAY= photocraft`.
+	Native file drag-and-drop is not supported on Wayland yet. Use File › Open, or run Professional Raster Compositor under XWayland with `WAYLAND_DISPLAY= photocraft`.	Natywne przeciąganie plików nie jest jeszcze obsługiwane w Waylandzie. Użyj Plik › Otwórz lub uruchom Professional Raster Compositor w XWayland poleceniem `WAYLAND_DISPLAY= photocraft`.
 	Duplicate Layers…	Duplikuj warstwy…
 	Duplicate style	Duplikuj styl
 	Edit Toolbar…	Edytuj pasek narzędzi…
@@ -1232,7 +1228,6 @@
 	Invert All	Odwróć wszystko
 	Invert has no settings.	Odwracanie nie ma ustawień.
 	Italic	Kursywa
-	Join us on Discord	Dołącz do nas na Discordzie
 	Justify all	Wyjustuj wszystko
 	Justify last centered	Wyjustuj, ostatni wiersz wyśrodkowany
 	Justify last left	Wyjustuj, ostatni wiersz do lewej
@@ -1368,9 +1363,9 @@
 	Perspective Warp is not active	Wypaczenie perspektywy nie jest aktywne
 	Perspective Warp: draw planes along the image's perspective, then switch to Warp	Wypaczenie perspektywy: narysuj płaszczyzny zgodnie z perspektywą obrazu, a następnie przełącz na wypaczenie
 	Photo Filter	Filtr fotograficzny
-	PhotoCraft	PhotoCraft
-	PhotoCraft Manages Colors	Kolorami zarządza PhotoCraft
-	PhotoCraft — an open-source, native image editor written in Rust.	PhotoCraft — natywny edytor obrazów o otwartym kodzie źródłowym, napisany w Rust.
+	Professional Raster Compositor	Professional Raster Compositor
+	Professional Raster Compositor Manages Colors	Kolorami zarządza Professional Raster Compositor
+	Professional Raster Compositor — an open-source, native image editor written in Rust.	Professional Raster Compositor — natywny edytor obrazów o otwartym kodzie źródłowym, napisany w Rust.
 	Pin Depth:	Głębokość szpilki:
 	Pixel Length:	Długość w pikselach:
 	Pixels/Centimeter	Pikseli/centymetr
@@ -1445,11 +1440,11 @@
 	Import Shortcuts…	Importuj skróty…
 	Load a keyboard shortcut set saved as .kys	Wczytaj zestaw skrótów klawiaturowych zapisany jako .kys
 	Imported {n} shortcuts from {file}. Click OK to keep them.	Zaimportowano skrótów: {n} z pliku {file}. Kliknij OK, aby je zachować.
-	{n} commands are not in PhotoCraft.	Poleceń, których nie ma w PhotoCraft: {n}.
+	{n} commands are not in Professional Raster Compositor.	Poleceń, których nie ma w Professional Raster Compositor: {n}.
 	Keyboard shortcuts imported	Zaimportowano skróty klawiaturowe
 	Your keyboard shortcut set {set} is in use here: {n} shortcuts differ from the defaults. Edit › Keyboard Shortcuts shows them; Reset All to Defaults undoes this.	Twój zestaw skrótów klawiaturowych {set} jest tu używany: skrótów innych niż domyślne: {n}. Edycja › Skróty klawiaturowe je pokazuje; Przywróć wszystkie domyślne cofa import.
 	Import keyboard shortcuts?	Zaimportować skróty klawiaturowe?
-	PhotoCraft found your keyboard shortcut set {set} from another image editor on this computer: {n} of its shortcuts differ from PhotoCraft's. Import it?	PhotoCraft znalazł na tym komputerze Twój zestaw skrótów klawiaturowych {set} z innego edytora obrazów: skrótów innych niż w PhotoCraft: {n}. Zaimportować go?
+	Professional Raster Compositor found your keyboard shortcut set {set} from another image editor on this computer: {n} of its shortcuts differ from Professional Raster Compositor's. Import it?	Professional Raster Compositor znalazł na tym komputerze Twój zestaw skrótów klawiaturowych {set} z innego edytora obrazów: skrótów innych niż w Professional Raster Compositor: {n}. Zaimportować go?
 	Edit › Keyboard Shortcuts › Reset All to Defaults undoes an import.	Edycja › Skróty klawiaturowe › Przywróć wszystkie domyślne cofa import.
 	Don't Import	Nie importuj
 	The keyboard shortcut set was not imported: {error}	Nie zaimportowano zestawu skrótów klawiaturowych: {error}
@@ -1637,7 +1632,6 @@
 	Apple Watch 45mm	Apple Watch 45 mm
 	Aqua	Błękit morski
 	Art & Illustration	Sztuka i ilustracja
-	ArtCraft	ArtCraft
 	Background Eraser Tool	Narzędzie Gumka tła
 	Bevel & Emboss	Ukos i płaskorzeźba
 	Blend Mode	Tryb mieszania
@@ -1674,7 +1668,7 @@
 	Current Tool	Bieżące narzędzie
 	Custom Shape Tool	Narzędzie Kształt niestandardowy
 	Cyans	Cyjany
-	Default PhotoCraft Size	Domyślny rozmiar PhotoCraft
+	Default Professional Raster Compositor Size	Domyślny rozmiar Professional Raster Compositor
 	Delete Workspace	Usuń obszar roboczy
 	Diamond	Romb
 	Dimensions:	Wymiary:
@@ -1785,7 +1779,7 @@
 	Pen Tool	Narzędzie Pióro
 	Convert Point Tool	Narzędzie Konwertuj punkt
 	Photo	Zdjęcie
-	PhotoCraft website	Strona internetowa PhotoCraft
+	Professional Raster Compositor website	Strona internetowa Professional Raster Compositor
 	Picas	Pikasy
 	Pillow Emboss	Płaskorzeźba poduszkowa
 	Pixel Replacement	Zamiana pikseli
@@ -2122,7 +2116,7 @@
 	System Info…	Informacje o systemie…
 	System Info	Informacje o systemie
 	More panels	Więcej paneli
-	These settings aren't available in PhotoCraft yet.	Te ustawienia nie są jeszcze dostępne w PhotoCraft.
+	These settings aren't available in Professional Raster Compositor yet.	Te ustawienia nie są jeszcze dostępne w Professional Raster Compositor.
 	Graphics	Grafika
 	Reset GPU Backend	Resetuj backend GPU
 	Applies at next launch.	Zadziała po następnym uruchomieniu.
@@ -2710,7 +2704,7 @@
 	Automatic uses GPU acceleration when available and falls back to CPU rendering on errors.	Tryb automatyczny używa akceleracji GPU, gdy jest dostępna, a w razie błędów przełącza się na renderowanie CPU.
 	Switched to CPU rendering	Przełączono na renderowanie CPU
 	GPU acceleration could not continue. Your documents are unchanged.	Akceleracja GPU nie mogła być kontynuowana. Twoje dokumenty nie zostały zmienione.
-	PhotoCraft is using the CPU image compositor. The window may still use your graphics adapter.	PhotoCraft używa kompozytora obrazu CPU. Okno może nadal korzystać z karty graficznej.
+	Professional Raster Compositor is using the CPU image compositor. The window may still use your graphics adapter.	Professional Raster Compositor używa kompozytora obrazu CPU. Okno może nadal korzystać z karty graficznej.
 	Retry GPU requires a restart. Save your work first.	Ponowna próba z GPU wymaga restartu. Najpierw zapisz swoją pracę.
 	Retry GPU tries the graphics processor again now.	Spróbuj ponownie z GPU od razu ponawia próbę z procesorem graficznym.
 	GPU acceleration resumed.	Akceleracja GPU wznowiona.
@@ -3195,7 +3189,6 @@ cameraRaw	Roughness	Chropowatość
 	Custom Pixel Aspect Ratio	Niestandardowe proporcje pikseli
 	32-bit Preview Options	Opcje podglądu 32-bitowego
 	New Guide	Nowa prowadnica
-	Join the ArtCraft Discord	Dołącz do Discorda ArtCraft
 	Report an Issue	Zgłoś problem
 	WIA Support	Obsługa WIA
 	Load Files into Stack	Wczytaj pliki do stosu
@@ -3444,8 +3437,8 @@ cameraRaw	Roughness	Chropowatość
 	Could not open	Nie można otworzyć
 	{path}: the path is not valid Unicode; rename the file and open it again.	{path}: ścieżka nie jest prawidłowym Unicode; zmień nazwę pliku i otwórz go ponownie.
 	Native file drag-and-drop is not supported on Wayland yet. Use File › Open, or copy the image in your file manager and paste it with {paste}.	Natywne przeciąganie i upuszczanie plików nie jest jeszcze obsługiwane w Wayland. Użyj Plik › Otwórz albo skopiuj obraz w menedżerze plików i wklej go za pomocą {paste}.
-	To drop files, start PhotoCraft under XWayland: `{command}`	Aby upuszczać pliki, uruchom PhotoCraft pod XWayland: `{command}`
-	Or set Preferences › Performance › Linux display server to X11: PhotoCraft then always starts under XWayland.	Albo ustaw Preferencje › Wydajność › Serwer wyświetlania Linuksa na X11: PhotoCraft będzie wtedy zawsze uruchamiany pod XWayland.
+	To drop files, start Professional Raster Compositor under XWayland: `{command}`	Aby upuszczać pliki, uruchom Professional Raster Compositor pod XWayland: `{command}`
+	Or set Preferences › Performance › Linux display server to X11: Professional Raster Compositor then always starts under XWayland.	Albo ustaw Preferencje › Wydajność › Serwer wyświetlania Linuksa na X11: Professional Raster Compositor będzie wtedy zawsze uruchamiany pod XWayland.
 	Edit › Paste	Edycja › Wklej
 	Use File › Open, or paste a copied image with {paste}.	Użyj Plik › Otwórz albo wklej skopiowany obraz za pomocą {paste}.
 
@@ -3549,7 +3542,7 @@ cameraRaw	Roughness	Chropowatość
 	Color to Alpha…	Kolor na alfę…
 	Transparency Threshold	Próg przezroczystości
 	Opacity Threshold	Próg krycia
-	PhotoCraft — Screen Color Picker	PhotoCraft — Próbnik kolorów ekranu
+	Professional Raster Compositor — Screen Color Picker	Professional Raster Compositor — Próbnik kolorów ekranu
 
 	Rasterize svg groups deeper than	Rasteryzuj grupy SVG głębsze niż ten poziom
 	0 turns this threshold off; SVG groups nested deeper than 100 levels are always rasterized.	0 wyłącza ten próg; grupy SVG zagnieżdżone głębiej niż 100 poziomów są zawsze rasteryzowane.
@@ -3826,7 +3819,7 @@ curves	Smooth	Wygładź
 	{name} (Photoshop)	{name} (Photoshop)
 	{message} ({note})	{message} ({note})
 @plural	Loaded {n} action from {file}|Loaded {n} actions from {file}	Wczytano {n} operację z {file}|Wczytano {n} operacje z {file}|Wczytano {n} operacji z {file}
-@plural	{n} step has no PhotoCraft equivalent yet|{n} steps have no PhotoCraft equivalent yet	{n} krok nie ma jeszcze odpowiednika w PhotoCraft|{n} kroki nie mają jeszcze odpowiednika w PhotoCraft|{n} kroków nie ma jeszcze odpowiednika w PhotoCraft
+@plural	{n} step has no Professional Raster Compositor equivalent yet|{n} steps have no Professional Raster Compositor equivalent yet	{n} krok nie ma jeszcze odpowiednika w Professional Raster Compositor|{n} kroki nie mają jeszcze odpowiednika w Professional Raster Compositor|{n} kroków nie ma jeszcze odpowiednika w Professional Raster Compositor
 @plural	Saved {n} action to {file}|Saved {n} actions to {file}	Zapisano {n} operację do {file}|Zapisano {n} operacje do {file}|Zapisano {n} operacji do {file}
 @plural	{n} step with no Photoshop equivalent left out|{n} steps with no Photoshop equivalent left out	Pominięto {n} krok bez odpowiednika w Photoshopie|Pominięto {n} kroki bez odpowiednika w Photoshopie|Pominięto {n} kroków bez odpowiednika w Photoshopie
 
@@ -3854,19 +3847,19 @@ curves	Smooth	Wygładź
 	Sent to {printer}	Wysłano do {printer}
 	set in Print Settings…	ustawiane w ustawieniach druku…
 	ICO is limited to 256 × 256 pixels	ICO jest ograniczony do 256 × 256 pikseli
-# PhotoCraft release checks.
+# Professional Raster Compositor release checks.
 	Check for Updates…	Sprawdź aktualizacje…
-	PhotoCraft Updates	Aktualizacje PhotoCraft
+	Professional Raster Compositor Updates	Aktualizacje Professional Raster Compositor
 	Checking for updates…	Sprawdzanie aktualizacji…
 	Open the release page to choose an installer for your system.	Otwórz stronę wydania, aby wybrać instalator dla swojego systemu.
 	Open Download Page	Otwórz stronę pobierania
-	PhotoCraft is up to date.	PhotoCraft jest aktualny.
+	Professional Raster Compositor is up to date.	Professional Raster Compositor jest aktualny.
 	Could not check for updates.	Nie udało się sprawdzić aktualizacji.
 	Updates have not been checked yet.	Aktualizacje nie zostały jeszcze sprawdzone.
 	Check Again	Sprawdź ponownie
 	Automatically Check for Updates	Automatycznie sprawdzaj aktualizacje
 	Installed version: {version}	Zainstalowana wersja: {version}
-	PhotoCraft {version} is available.	PhotoCraft {version} jest dostępny.
+	Professional Raster Compositor {version} is available.	Professional Raster Compositor {version} jest dostępny.
 # History panel › History Brush source (#2966)
 	Paints from the History panel's source state	Maluje ze stanu źródłowego panelu Historia
 	Sets the source for the history brush	Ustawia źródło dla pędzla historii
@@ -3902,12 +3895,12 @@ curves	Smooth	Wygładź
 	Bicubic Smoother	Dwusześcienna wygładzona
 	Bicubic Sharper	Dwusześcienna wyostrzona
 	Pasting from other apps is unavailable	Wklejanie z innych aplikacji jest niedostępne
-	PhotoCraft can't reach the system clipboard in this session. On Wayland, a Flatpak sandbox hides the protocol that images from other apps are read through.	PhotoCraft nie ma w tej sesji dostępu do schowka systemowego. W Waylandzie piaskownica Flatpaka ukrywa protokół, przez który odczytywane są obrazy z innych aplikacji.
-	To paste from other apps, start PhotoCraft under XWayland: `{command}`	Aby wklejać z innych aplikacji, uruchom PhotoCraft pod XWaylandem: `{command}`
-	Nothing to paste: PhotoCraft can't read the system clipboard here	Nie ma czego wkleić: PhotoCraft nie może tutaj odczytać schowka systemowego
+	Professional Raster Compositor can't reach the system clipboard in this session. On Wayland, a Flatpak sandbox hides the protocol that images from other apps are read through.	Professional Raster Compositor nie ma w tej sesji dostępu do schowka systemowego. W Waylandzie piaskownica Flatpaka ukrywa protokół, przez który odczytywane są obrazy z innych aplikacji.
+	To paste from other apps, start Professional Raster Compositor under XWayland: `{command}`	Aby wklejać z innych aplikacji, uruchom Professional Raster Compositor pod XWaylandem: `{command}`
+	Nothing to paste: Professional Raster Compositor can't read the system clipboard here	Nie ma czego wkleić: Professional Raster Compositor nie może tutaj odczytać schowka systemowego
 	Delete this set	Usuń ten zestaw
 	New Set…	Nowy zestaw…
-	PhotoCraft Defaults	Domyślne PhotoCraft
+	Professional Raster Compositor Defaults	Domyślne Professional Raster Compositor
 	Save a list of these shortcuts as a web page	Zapisz listę tych skrótów jako stronę internetową
 	Save the changes to this set	Zapisz zmiany w tym zestawie
 	Save these shortcuts as a .kys file	Zapisz te skróty jako plik .kys

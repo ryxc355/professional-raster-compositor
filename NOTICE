@@ -1,11 +1,12 @@
-PhotoCraft
+Professional Raster Compositor
 Copyright (c) 2026 ArtCraft Team and the PhotoCraft contributors.
 Licensed under the MIT License or the Apache License, Version 2.0, at your option
 (LICENSE-MIT, LICENSE-APACHE).
 
-The ArtCraft name, wordmark and logos in docs/brand/ are trademarks of the ArtCraft Team. They are
-not open source and are not covered by the license above; their terms are in
-docs/brand/LICENSE-brand.txt.
+This project is a fork of PhotoCraft (https://github.com/storytold/photocraft); the copyright
+notice above is retained as required by its license. The ArtCraft name, wordmark and logos are
+trademarks of the ArtCraft Team; this fork does not use them, and the brand assets that carried
+them (upstream `docs/brand/`) have been removed as its license terms require.
 
 Third-party material
 
